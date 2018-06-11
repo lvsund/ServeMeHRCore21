@@ -15,8 +15,8 @@
         @Html.ActionLink("My Requests", "Index", "MyServiceRequests")<br />
         @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
     </div>
-    @*@if (ViewBag.IsMember == true)
-        {*@
+    @if (ViewBag.IsMember == true)
+        {
 
     <div class="col-md-3">
         <h2>Team Activities</h2>
@@ -26,10 +26,10 @@
 
         @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>*@
     </div>
-    @* }*@
+     }
 
-    @*@if (User.Identity.Name == (ViewBag.uadmin) || User.Identity.Name == (ViewBag.ubadmin))
-        {*@
+    @if (User.Identity.Name == (ViewBag.uadmin) || User.Identity.Name == (ViewBag.ubadmin))
+        {
 
     <div class="col-md-3">
         <h2>Administration</h2>
@@ -63,5 +63,5 @@
         @*<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
     </div>
 
-    @*}*@
+    }
 </div>
