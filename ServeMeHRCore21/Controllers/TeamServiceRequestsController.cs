@@ -62,6 +62,10 @@ namespace ServeMeHRCore21.Controllers
             return View(await serveMeHRCoreContext.ToListAsync());
         }
 
+
+
+
+
         // GET: ServiceRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -709,6 +713,9 @@ namespace ServeMeHRCore21.Controllers
 
             return Json(result);
         }
+
+        
+
 
     }
 }

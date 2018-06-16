@@ -52,6 +52,7 @@ namespace ServeMeHRCore21.Controllers
                 .Include(s => s.StatusNavigation)
                 .Include(s => s.TeamNavigation)
                 .Include(s => s.FileDetails)
+                //.OrderByDescending(s => s.DateTimeSubmitted)
                 .Where(s => s.StatusNavigation.StatusTypeNavigation.StatusTypeDescription == StatusType);
 
             if (!String.IsNullOrEmpty(searchString))
@@ -61,6 +62,43 @@ namespace ServeMeHRCore21.Controllers
 
             return View(await serveMeHRCoreContext.ToListAsync());
         }
+
+        [HttpPost]
+        public JsonResult SRList(DTParameters param, string StatusType)
+        {
+
+            int TotalCount = 0;
+            var filtered = this.GetSRFiltered(param.Search.Value, param.SortOrder, param.Start, param.Length,  StatusType, out TotalCount);
+
+            var SRList = filtered.Select(o => new ServiceRequests()
+            {
+
+                Id = o.Id,
+                DateTimeSubmitted=o.DateTimeSubmitted,
+                RequestHeading = o.RequestHeading,
+                RequestDescription = o.RequestDescription,
+                RequestorFirstName =o.RequestorFirstName,
+                RequestorLastName = o.RequestorLastName,
+                RequestorPhone = o.RequestorPhone,
+                RequestorEmail = o.RequestorEmail
+            });
+
+
+
+            DTResult<ServiceRequests> finalresult = new DTResult<ServiceRequests>
+            {
+                draw = param.Draw,
+                data = SRList.ToList(),
+                recordsFiltered = TotalCount,
+                recordsTotal = filtered.Count
+
+            };
+            return Json(finalresult);
+
+        }
+
+
+
 
         // GET: ServiceRequests/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -232,7 +270,7 @@ namespace ServeMeHRCore21.Controllers
             //var serviceRequests = await _context.ServiceRequests.SingleOrDefaultAsync(m => m.Id == id);
             var serviceRequests = await _context.ServiceRequests
     .Include(s => s.FileDetails)
-    .AsNoTracking()
+    //.AsNoTracking()
     .SingleOrDefaultAsync(m => m.Id == id);
 
             if (serviceRequests == null)
@@ -846,6 +884,51 @@ namespace ServeMeHRCore21.Controllers
 
             return Json(result);
         }
+
+        //for server side processing
+
+        public List<ServiceRequests> GetSRFiltered(string search, string sortOrder, int start, int length, string StatusType ,out int TotalCount)
+        {
+
+          
+            var result = _context.ServiceRequests.Where(p =>
+            (search == null
+                || p.Id.ToString().ToLower().Contains(search.ToLower())
+                || p.DateTimeSubmitted != null && p.DateTimeSubmitted.ToString().ToLower().Contains(search.ToLower())
+                || p.RequestHeading != null && p.RequestHeading.ToLower().Contains(search.ToLower())
+                || p.RequestDescription != null && p.RequestDescription.ToLower().Contains(search.ToLower())
+                || p.RequestorId != null && p.RequestorId.ToLower().Contains(search.ToLower())
+                || p.RequestorFirstName != null && p.RequestorFirstName.ToLower().Contains(search.ToLower())
+                || p.RequestorLastName != null && p.RequestorLastName.ToLower().Contains(search.ToLower())
+
+               )
+                &&
+                (p.StatusNavigation.StatusTypeNavigation.StatusTypeDescription == StatusType)
+               ).ToList();
+
+            TotalCount = result.Count;
+
+            result = result.Skip(start).Take(length).ToList();
+
+
+            switch (sortOrder)
+            {
+                case "Id":
+                    result = result.OrderByDescending(a => a.Id).ToList();
+                    break;
+                case "DateTimeSubmitted":
+                    result = result.OrderByDescending(a => a.DateTimeSubmitted).ToList();
+                    break;
+
+                default:
+                    //result = result.AsQueryable().ToList();
+                    result = result.OrderByDescending(a => a.DateTimeSubmitted).ToList();
+
+                    break;
+            }
+            return result.ToList();
+        }
+
 
     }
 }
