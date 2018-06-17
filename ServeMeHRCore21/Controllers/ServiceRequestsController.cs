@@ -894,7 +894,7 @@ namespace ServeMeHRCore21.Controllers
             var result = _context.ServiceRequests.Where(p =>
             (search == null
                 || p.Id.ToString().ToLower().Contains(search.ToLower())
-                || p.DateTimeSubmitted != null && p.DateTimeSubmitted.ToString().ToLower().Contains(search.ToLower())
+                || p.DateTimeSubmitted != null && p.DateTimeSubmitted.Value.ToString("yyyy-MM-dd").ToLower().Contains(search.ToLower())
                 || p.RequestHeading != null && p.RequestHeading.ToLower().Contains(search.ToLower())
                 || p.RequestDescription != null && p.RequestDescription.ToLower().Contains(search.ToLower())
                 || p.RequestorId != null && p.RequestorId.ToLower().Contains(search.ToLower())
