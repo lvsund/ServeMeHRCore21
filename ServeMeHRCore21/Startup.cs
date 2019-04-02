@@ -25,7 +25,7 @@ namespace ServeMeHRCore21
         {
             services.AddMvc();
 
-            var connection = @"Server=WINMAIN\VS2018;Database=ServeMeHRCore;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=WIN10DESKTOP\VS2019;Database=ServeMeHRCore;Trusted_Connection=True;ConnectRetryCount=0";
             //services.AddDbContext<ServeMeHRCoreContext>(options => options.UseSqlServer(connection));
             services.AddDbContext<ServeMeHRCoreContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connection));
         }

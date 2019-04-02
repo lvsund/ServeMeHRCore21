@@ -916,7 +916,7 @@ namespace ServeMeHRCore21.Controllers
                 case "Id":
                     result = result.OrderByDescending(a => a.Id).ToList();
                     break;
-                case "DateTimeSubmitted":
+                case "dateTimeSubmitted DESC":
                     result = result.OrderByDescending(a => a.DateTimeSubmitted).ToList();
                     break;
 
