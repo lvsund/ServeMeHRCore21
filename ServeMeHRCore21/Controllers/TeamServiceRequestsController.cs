@@ -18,9 +18,9 @@ namespace ServeMeHRCore21.Controllers
     public class TeamServiceRequestsController : Controller
     {
         private readonly ServeMeHRCoreContext _context;
-        private IHostingEnvironment _environment;
+        private IWebHostEnvironment _environment;
 
-        public TeamServiceRequestsController(ServeMeHRCoreContext context, IHostingEnvironment environment)
+        public TeamServiceRequestsController(ServeMeHRCoreContext context, IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment;

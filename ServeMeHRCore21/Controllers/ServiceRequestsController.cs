@@ -20,9 +20,9 @@ namespace ServeMeHRCore21.Controllers
     public class ServiceRequestsController : Controller
     {
         private readonly ServeMeHRCoreContext _context;
-        private IHostingEnvironment _environment;
+        private IWebHostEnvironment _environment;
 
-        public ServiceRequestsController(ServeMeHRCoreContext context, IHostingEnvironment environment)
+        public ServiceRequestsController(ServeMeHRCoreContext context, IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment;

@@ -15,9 +15,9 @@ namespace ServeMeHRCore21.Controllers
     public class FileDetailsController : Controller
     {
         private readonly ServeMeHRCoreContext _context;
-        private IHostingEnvironment _environment;
+        private IWebHostEnvironment _environment;
 
-        public FileDetailsController(ServeMeHRCoreContext context, IHostingEnvironment environment)
+        public FileDetailsController(ServeMeHRCoreContext context, IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment;
